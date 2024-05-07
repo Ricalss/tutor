@@ -19,5 +19,5 @@ from lessons import views
 urlpatterns = [
     #path("admin/", admin.site.urls),
     path("viewsreturn/",views.viewsreturn),
-    path("retinfo/",views.retinfo.as_view())
+    path("retinfo/",views.retinfo)
 ]

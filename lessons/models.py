@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 class user(models.Model):
+    openid = models.CharField(max_length=32)
+    avatar = models.ImageField
     password = models.CharField(max_length=64)
     user_type = models.CharField(verbose_name="recruiter/tutor/TBD",max_length=16,default="TBD")
     name = models.CharField(max_length=64,default="TBD")
@@ -17,8 +19,10 @@ class public_msg(models.Model):
     thumbs_up = models.IntegerField
     content = models.TextField
 
+#class private_chatlist(models.Model):
+    
 class private_msg(models.Model):
     sender_id = models.ForeignKey("user",related_name='FriendList_sender_id',on_delete=models.CASCADE)
     receiver_id = models.ForeignKey("user",related_name='FriendList_receiver_id',on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)   
     content = models.TextField
