@@ -20,5 +20,9 @@ urlpatterns = [
     #path("admin/", admin.site.urls),
     path("viewsreturn/",views.viewsreturn),
     path("retinfo/",views.retinfo),
-    path("tutor/tologin",views.tutor_tologin)
+    path("tutor/tologin",views.tutor_tologin),
+    path("tutor/changeuserinfo",views.tutor_changeuserinfo),
+    path("tutor/getpubmsg",views.tutor_getpubmsg),
+    path("tutor/pushPubmsg",views.tutor_pushPubmsg),
+    path("tutor/lookuserUrl",views.tutor_lookuserUrl)
 ]
