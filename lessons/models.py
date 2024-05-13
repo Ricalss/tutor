@@ -20,12 +20,6 @@ class public_msg(models.Model):
     thumbs_up = models.IntegerField
     content = models.TextField(null=True, blank=True)
 
-# class chatlist(models.Model):
-#     hostid = models.ForeignKey("user", on_delete=models.CASCADE)
-#     guestid = models.ForeignKey("user", on_delete=models.CASCADE)
-#     new = models.IntegerField(default=0)
-#     latesttime = models.TextField(null=True, blank=True)
-
 class chat_msg(models.Model):
     sender_id = models.ForeignKey("user",related_name='FriendList_sender_id',on_delete=models.CASCADE)
     receiver_id = models.ForeignKey("user",related_name='FriendList_receiver_id',on_delete=models.CASCADE)
