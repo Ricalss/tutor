@@ -25,8 +25,9 @@ def tutor_tologin(request):
     if request.method == 'POST':
         wxapp_data = json.loads(request.body) # 小程序默认以json方式传递参数
         print(wxapp_data)
+
         if 'code'in wxapp_data :
-            url = f'https://api.weixin.qq.com/sns/jscode2session?appid={wxapp_ID}&secret={wxapp_secret}&js_code={wxapp_data['code']}&grant_type=authorization_code'
+            url = f"https://api.weixin.qq.com/sns/jscode2session?appid={wxapp_ID}&secret={wxapp_secret}&js_code={wxapp_data['code']}&grant_type=authorization_code"
             response = requests.get(url)
             data = response.json()  #data {'session_key': 'ixzZXN6RI/luRBOs2n0oKw==', 'openid': 'oz3gD7Q1eLGW9Bctqa9nlLPtxNuA'}
             print('微信服务器数据：',data)
@@ -47,6 +48,28 @@ def tutor_tologin(request):
             else:
                 # 登录失败，返回错误信息
                 return JsonResponse({'status': 'error', 'message': "Unable to get OpenID"})
+            
+        elif((not wxapp_data['wxuser']) and 'id' not in wxapp_data):#app应用创建用户
+            retid=models.user.objects.create(nickName=wxapp_data['nickName'],password=wxapp_data['password']).id #可能报错
+            print(retid)
+            retmsg = 'create new user'
+            db = models.user.objects.filter(id=retid).values('id','user_type','name','gender','college','self_intro','avatarUrl','nickName')[0]
+            print("db:",db)
+            return JsonResponse({'status': 'success', 'message':f'{retmsg }','userinfo': db,'token':{'openid':'','session_key':'','islogin':'true'}})
+        
+        elif((not wxapp_data['wxuser']) and 'id' in wxapp_data):#app应用登录
+            dbbuf = models.user.objects.filter(id=wxapp_data['id'])
+            dbword=models.user.objects.filter(id=wxapp_data['id']).values('id','password')
+            if(dbbuf):
+                db = dbbuf.values('id','user_type','name','gender','college','self_intro','avatarUrl','nickName')[0]
+                #print("db:",db)
+                if(dbword[0]['password']==wxapp_data['password']):
+                    return JsonResponse({'status': 'success', 'message':'log in !','userinfo': db,'token':{'openid':'','session_key':'','islogin':'true'}})
+                else:
+                    return JsonResponse({'status': 'pwdError', 'message':'password is wrong!'})
+            else:
+                return JsonResponse({'status': 'error', 'message':'user not found!'})
+
         return JsonResponse({'status': 'error', 'message': "code isn't exist"})
     return JsonResponse({'status': 'error', 'message': "no code in POST"})
 

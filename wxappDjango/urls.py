@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from lessons import views
 urlpatterns = [
-    #path("admin/", admin.site.urls),
+    path("admin", admin.site.urls),
+    path("viewsreturn",views.viewsreturn),
     path("viewsreturn/",views.viewsreturn),
-    path("retinfo/",views.retinfo),
+    path("retinfo",views.retinfo),
     path("tutor/tologin",views.tutor_tologin),
     path("tutor/changeuserinfo",views.tutor_changeuserinfo),
     path("tutor/getpubmsg",views.tutor_getpubmsg),

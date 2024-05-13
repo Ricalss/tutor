@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class user(models.Model):
-    openid = models.CharField(max_length=32,unique=True)
+    openid = models.CharField(max_length=32,unique=False)
     password = models.CharField(max_length=64)
     user_type = models.CharField(verbose_name="recruiter/tutor/TBD",max_length=16,blank=True)
     name = models.CharField(max_length=64, blank=True)

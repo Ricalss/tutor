@@ -22,7 +22,7 @@ SECRET_KEY = "django-insecure-4yo2_imo)1f+_lrg+-irsfyym@o!d)@rn0yb1)cx^4fhry8@&h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    #"lessons.apps.LessonsConfig",
+    "sslserver",
     "lessons"
 ]
 
@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'wxapptest',
         'USER': 'wxappuser',
-        'PASSWORD': 'Develop233',
+        'PASSWORD': 'FXFjiuni233',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -114,11 +114,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Shanghai"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -130,3 +130,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SECURE_SSL_REDIRECT = False
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
